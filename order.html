@@ -1,0 +1,56 @@
+ <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Dosis:wght@200;500&family=Montserrat:ital,wght@0,300;0,400;0,500;0,700;1,200&family=Poppins:ital,wght@0,400;0,500;1,200&family=Raleway:wght@300;600;700&display=swap" rel="stylesheet">
+  <title>Orders</title>
+  <link rel="stylesheet" type="text/css" href="Project.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <header>
+        <img class="logo_img" src="logo_img.png">
+        <h2>Kafene</h2>
+        <ul class="header-nav">
+            <li><a href="order.html" id="orderLink">Orders</a></li>
+            <li><a href="product.html" id="productsLink">Products</a></li>
+            <li><a href="user.html" id="usersLink">Users</a></li>
+        </ul>
+        
+    </div>
+    
+    <a class="out" href="login.html">LogOut</a>
+  </header>
+
+  <section class="side_section">
+  <h1 class="heading">Orders</h1>
+  <h3>Filters</h3>
+  <p class="count">Count: <span id="totalCount">0</span></p> 
+  <div id="filters">
+    <label><input type="checkbox" class="filter"  value="New"> New</label>
+    <label><input type="checkbox" class="filter" value="Packed"> Packed</label>
+    <label><input type="checkbox" class="filter" value="InTransit"> In Transit</label>
+    <label><input type="checkbox" class="filter" value="Delivered"> Delivered</label>
+  </div>
+</section>
+  <div id="orderList">
+    <table class="order_table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th> Name</th>
+          <th>Date</th>
+          <th>Amount</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+
+  
+<script src="order.js" type="text/javascript"></script>
+</body>
+</html>

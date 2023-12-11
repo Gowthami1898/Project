@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Orders</title>
+  <link rel="stylesheet" type="text/css" href="Project.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <header>
+        <img class="logo_img" src="logo.58169365.png">
+        <h2>Kafene</h2>
+        <ul class="header-nav">
+            <li><a href="order.html" >Orders</a></li>
+            <li><a href="product.html" id="productsLink">Products</a></li>
+            <li><a href="#user" id="usersLink">Users</a></li>
+        </ul>
+    </div>
+    
+    <a class="out" href="Project.html">LogOut</a>
+  </header>
+
+  <section class="side_section">
+  <h1 class="heading">Orders</h1>
+  <h1>Filters</h1>
+  <p class="count">Count: <span id="totalCount">0</span></p> 
+  <div id="filters">
+    <label><input type="checkbox" class="filter" value="New"> New</label><br><br>
+    <label><input type="checkbox" class="filter" value="Packed"> Packed</label><br><br>
+    <label><input type="checkbox" class="filter" value="InTransit"> In Transit</label><br><br>
+    <label><input type="checkbox" class="filter" value="Delivered"> Delivered</label><br><br>
+  </div>
+</section>
+  <div id="orderList">
+    <table class="order-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th> Name</th>
+          <th>Date</th>
+          <th>Amount</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+<script>
+ $(document).ready(function() {
+  let ordersData = []; 
+  function fetchOrders() {
+    $.ajax({
+      url: 'https://5fc1a1c9cb4d020016fe6b07.mockapi.io/api/v1/orders',
+      type: 'GET',
+      success: function(response) {
+      ordersData = response;
+      displayOrders(ordersData);
+
+      if (ordersData.length === 11) {
+        $('.filter').prop('checked', true);
+      }
+    },
+     
+    
+    });
+  }
+ fetchOrders();
+
+  function displayOrders(orders) {
+    const orderTableBody = $('.order-table tbody');
+    orderTableBody.empty(); 
+
+    orders.forEach(order => {
+    const orderRow = $('<tr class="order-details"></tr>'); 
+    orderRow.append(`<td class="gray-text">${order.id}</td>`);
+    orderRow.append(`<td>${order.customerName}</td>`);
+    orderRow.append(`<td>${order.orderDate}</span><br><span class="gray-text">${order.orderTime}</span></td>`);
+    orderRow.append(`<td><span class="gray-text">$${order.amount}</span></td>`);
+    orderRow.append(`<td>${order.orderStatus}</td>`);
+    orderTableBody.append(orderRow);
+});
+    updateCount(); 
+  }
+
+  function updateCount() {
+    const selectedStatus = getSelectedStatus();
+    const countSpan = $('#totalCount');
+    const count = selectedStatus.length > 0 ?
+      ordersData.filter(order => selectedStatus.includes(order.orderStatus)).length :
+      ordersData.length;
+    countSpan.text(count); 
+  }
+
+  function getSelectedStatus() {
+    const selectedStatus = [];
+    $('.filter:checked').each(function() {
+      selectedStatus.push($(this).val());
+    });
+    return selectedStatus;
+  }
+  $('.filter').change(function() {
+    const selectedStatus = getSelectedStatus();
+    const filteredOrders = ordersData.filter(order =>
+      selectedStatus.includes(order.orderStatus)
+    );
+    displayOrders(filteredOrders); 
+  });
+});
+
+</script>
+</body>
+</html>
